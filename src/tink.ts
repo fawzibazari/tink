@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { config as dotenvConfig } from 'dotenv';
 import * as http from 'http';
 import * as https from 'https';
-import { TinkTransctionsParams } from '../utils/interfaces';
+import { TinkTransctionsParams } from './Interfaces/ITransactionsParams';
 
 dotenvConfig();
 
