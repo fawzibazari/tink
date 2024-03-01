@@ -1,6 +1,6 @@
 <div id="top"></div>
 
-# tink integration for Moneybounce
+# Tink integration for Moneybounce
 
 # API Description
 
