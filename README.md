@@ -36,6 +36,7 @@ const TinkObject = new TinkConnector();
 const TinkUserObject = new User();
 ```
 
+### Before Tink-link
 
 Generating a Client Access Token:
 
@@ -61,9 +62,45 @@ Creating a Tink Link:
 ```javascript
 const options =  {
         "redirect_uri": "https://example.com/callback"
+        // You could add more if you want (Check Tink Link Documentation)
     }
 
 const options = await TinkObject.TinkObject.TinkLink(options)
+```
+
+All together :
+
+```javascript
+ const link =  TinkObject.ClientAccessToken().then(() =>
+ TinkObject.createUser(id).then(() =>
+   TinkObject.DelegateCode(id, fullname).then(() =>
+     TinkObject.TinkLink(options),
+   ),
+ ),
+ );
+```
+### After Tink-link
+This part can be execute a part from the first part if you have an active userAccessToken you dont need to call  ```UserCode``` and ```UserAccessToken```
+
+Retrieving Accounts :
+
+```javascript
+ const userCode = await TinkObject.UserCode(externalUserId);
+      await TinkUserObject.UserAccessToken(userCode);
+      const list_accounts = await TinkUserObject.Accounts()
+```
+
+Retrieving Transactions :
+if you have an active userAccessToken you can pass the token in the ```userToken```Param
+
+
+```javascript
+ const userCode = await TinkObject.UserCode(externalUserId);
+      await TinkUserObject.UserAccessToken(userCode);
+      const list_transactions = await TinkUserObject.Transactions({
+          isBooked: true,
+          userToken: req.body.userToken,
+        });
 ```
 
 ## API Description
