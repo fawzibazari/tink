@@ -6,7 +6,24 @@
 
 The integration was implemented using OOP (Factory Method).<br> The class handles the creation of users, connection of bank accounts, retrieval of transactions, accounts, and credentials, among other functionalities.
 
-For more information please check Tink documentation (Transactions)
+For more information please check Tink documentation (<a href="https://docs.tink.com/resources/transactions">Transactions<a/>).
+
+## Instalation
+
+To use our Class you will need to copy the ```tink.ts``` file or clonning this repository,
+
+Before you begin make sure you have a ```.env```file and you this property filled in it: 
+
+```javascript
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+BASE_URL = 'https://api.tink.com'
+CLIENT_SCOPES = 'scope1:read, scope2:delete,...'
+USERS_SCOPES = 'scope1:read, scope2:delete,...'
+ACTOR_CLIENT_ID = ''
+```
+
+
 ## Usage
 
 Import the Class and create instances:
@@ -14,10 +31,39 @@ Import the Class and create instances:
 ```javascript
 import { TinkConnector, User } from "./tink";
 
-
 //tink
 const TinkObject = new TinkConnector();
 const TinkUserObject = new User();
+```
+
+
+Generating a Client Access Token:
+
+```javascript
+const clientToken = await TinkObject.ClientAccessToken();
+```
+
+
+Creating a user:
+
+```javascript
+const user = await TinkObject.createUser(id)
+```
+
+Creating a delegate code:
+
+```javascript
+const code = await TinkObject.DelegateCode(id, fullname)
+```
+
+Creating a Tink Link:
+
+```javascript
+const options =  {
+        "redirect_uri": "https://example.com/callback"
+    }
+
+const options = await TinkObject.TinkObject.TinkLink(options)
 ```
 
 ## API Description
@@ -25,8 +71,5 @@ const TinkUserObject = new User();
 This is a schema outlining how the flow will work, and these are the steps to follow.<br>
 
 ![Capture d’écran 2022-04-27 à 17 03 19](https://user-images.githubusercontent.com/67472505/165549520-c43667ca-c6fe-41f1-8aba-4877c077ac00.png)
-
-<!-- GETTING STARTED -->
-## Getting Started
 
 Peace 🤘
