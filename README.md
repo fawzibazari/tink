@@ -91,15 +91,26 @@ Retrieving Accounts :
 ```
 
 Retrieving Transactions :
+
 if you have an active userAccessToken you can pass the token in the ```userToken```Param
+
+<a href="">Here<a/> is the list of all the params you can use 
 
 
 ```javascript
+
+// Without a userAccessToken
  const userCode = await TinkObject.UserCode(externalUserId);
       await TinkUserObject.UserAccessToken(userCode);
       const list_transactions = await TinkUserObject.Transactions({
           isBooked: true,
           userToken: req.body.userToken,
+        });
+
+// With a userAccessToken
+const list_transactions = await TinkUserObject.Transactions({
+          isBooked: true,
+          userToken: userToken,
         });
 ```
 
