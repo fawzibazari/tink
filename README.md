@@ -1,143 +1,123 @@
 <div id="top"></div>
 
-# Tink-Manager-Legacy
-The latest Tink integration
-# API Description
-In this API we will make the connection of our clients bank account,<br>
-so what i will do is api calls and the routes for linking them with our mobile app
+# Tink integration for Moneybounce
 
-Technologies I used:<br>
-  &nbsp; [Typescript](https://www.typescriptlang.org/) as the main language,<br>
-  &nbsp; and some librairies,<br>
-  &nbsp; hope it was a good choice 😁
+## Description
+
+The integration was implemented using OOP (Factory Method).<br> The class handles the creation of users, connection of bank accounts, retrieval of transactions, accounts, and credentials, among other functionalities.
+
+For more information please check Tink documentation (<a href="https://docs.tink.com/resources/transactions">Transactions<a/>).
+
+## Instalation
+
+To use our Class you will need to copy the ```tink.ts``` file or clonning this repository,
+
+Before you begin make sure you have a ```.env```file and you this property filled in it: 
+
+```javascript
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+BASE_URL = 'https://api.tink.com'
+CLIENT_SCOPES = 'scope1:read, scope2:delete,...'
+USERS_SCOPES = 'scope1:read, scope2:delete,...'
+ACTOR_CLIENT_ID = ''
+```
 
 
-This is a schema of how will the api be working and those are the steps to folow<br>
+## Usage
+
+Import the Class and create instances:
+
+```javascript
+import { TinkConnector, User } from "./tink";
+
+//tink
+const TinkObject = new TinkConnector();
+const TinkUserObject = new User();
+```
+
+### Before Tink-link
+
+Generating a Client Access Token:
+
+```javascript
+const clientToken = await TinkObject.ClientAccessToken();
+```
+
+
+Creating a user:
+
+```javascript
+const user = await TinkObject.createUser(id)
+```
+
+Creating a delegate code:
+
+```javascript
+const code = await TinkObject.DelegateCode(id, fullname)
+```
+
+Creating a Tink Link:
+
+```javascript
+const options =  {
+        "redirect_uri": "https://example.com/callback"
+        // You could add more if you want (Check Tink Link Documentation)
+    }
+
+const options = await TinkObject.TinkObject.TinkLink(options)
+```
+
+All together :
+
+```javascript
+ const link =  TinkObject.ClientAccessToken().then(() =>
+ TinkObject.createUser(id).then(() =>
+   TinkObject.DelegateCode(id, fullname).then(() =>
+     TinkObject.TinkLink(options),
+   ),
+ ),
+ );
+```
+### After Tink-link
+This part can be execute a part from the first part if you have an active userAccessToken you dont need to call  ```UserCode``` and ```UserAccessToken```
+
+Retrieving Accounts :
+
+```javascript
+ const userCode = await TinkObject.UserCode(externalUserId);
+      await TinkUserObject.UserAccessToken(userCode);
+      const list_accounts = await TinkUserObject.Accounts()
+```
+
+Retrieving Transactions :
+
+if you have an active userAccessToken you can pass the token in the ```userToken```Param
+
+<a href="">Here<a/> is the list of all the params you can use 
+
+
+```javascript
+
+// Without a userAccessToken
+ const userCode = await TinkObject.UserCode(externalUserId);
+      await TinkUserObject.UserAccessToken(userCode);
+      const list_transactions = await TinkUserObject.Transactions({
+          isBooked: true,
+          userToken: req.body.userToken,
+        });
+
+// With a userAccessToken
+const list_transactions = await TinkUserObject.Transactions({
+          isBooked: true,
+          userToken: userToken,
+        });
+```
+
+## API Description
+
+This is a schema outlining how the flow will work, and these are the steps to follow.<br>
 
 ![Capture d’écran 2022-04-27 à 17 03 19](https://user-images.githubusercontent.com/67472505/165549520-c43667ca-c6fe-41f1-8aba-4877c077ac00.png)
 
-<!-- GETTING STARTED -->
-## Getting Started
-
-### Prerequisites
-
-You will need NPM(node package manager) to run this project
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-## Installation
-Clone the repo
-   ```sh
-   git clone https://github.com/Moneybounce/Tink-Manager.git
-   ```
-Install NPM packages   
-```bash
-$ yarn install
-```
-## Running the app
-```bash
-
-# Prod
-$ yarn start
-
-# watch mode
-$ yarn dev
-```
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-## Usage / Documentation 
-
-## Get Tink code
-
-### Request
-
-`POST /code/`
-
-`body: `
-```javascript
-{
-id: "10"
-}
-```
-    curl -i -H 'Accept: application/json' http://localhost:8080/code/
-    
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-    
-### Response
-
-    HTTP/1.1 200 OK
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
-
-    { "delegate_code": "code" }
-    
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-# Private API
-In here you can use the tink API to retrieve data we need with our own integration and our shortcuts
-
-## Authentication
-
-### Request
-
-`POST /auth/login`
-
-`body: `
-```javascript
-{
-    "username": "ASK ME FOR IT",
-    "password": "I WILL GIVE IT TO YOU"
-}
-```
-    curl -i -H 'Accept: application/json' http://localhost:8080/auth/login
-    
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-    
-### Response
-
-    HTTP/1.1 200 OK
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
-
-    {"accessToken": "with the token in here"}
-
-## List transactions
-
-### Request
-
-`POST /transactions/list-transactions`
-
-`body: `
-```javascript
-{
-    "externalUserId": "999"
-}
-```
-    curl -i -H 'Accept: application/json' http://localhost:8080/transactions/list-transactions
-    
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-    
-### Response
-
-    HTTP/1.1 200 OK
-    Status: 200 OK
-    Connection: close
-    Content-Type: application/json
-    Content-Length: 2
-
-    {[]} // an array of transactions 
-
-
 Peace 🤘
-
-![image](https://user-images.githubusercontent.com/67472505/165550168-c0fc9ae0-7d5b-46ec-b651-d3a2fcbf4fed.png)
-
-
