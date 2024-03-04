@@ -94,7 +94,7 @@ Retrieving Transactions :
 
 if you have an active userAccessToken you can pass the token in the ```userToken```Param
 
-<a href="">Here<a/> is the list of all the params you can use 
+<a href="https://github.com/Moneybounce/tink/blob/master/src/Interfaces/ITransactions.ts">Here<a/> is the list of all the params you can use 
 
 
 ```javascript
