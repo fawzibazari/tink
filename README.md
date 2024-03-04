@@ -122,8 +122,6 @@ This is a schema outlining how the flow will work, and these are the steps to fo
 
 
 ## TODO
-### User :
-
 - [ ] Implements typing for accounts and transactions
 - [ ] Implements all the params for Transactions for the moment i implemented 5
 
