@@ -12,7 +12,7 @@ For more information please check Tink documentation (<a href="https://docs.tink
 
 To use our Class you will need to copy the ```tink.ts``` file or clonning this repository,
 
-Before you begin make sure you have a ```.env```file and you have these properties filled within them: 
+Before you begin make sure you have a ```.env``` file and you have these properties filled in it: 
 
 ```javascript
 CLIENT_ID = ''
