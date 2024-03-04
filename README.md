@@ -8,7 +8,7 @@ The integration was implemented using OOP (Factory Method).<br> The class handle
 
 For more information please check Tink documentation (<a href="https://docs.tink.com/resources/transactions">Transactions<a/>).
 
-## Instalation
+## Installation
 
 To use our Class you will need to copy the ```tink.ts``` file or clonning this repository,
 
