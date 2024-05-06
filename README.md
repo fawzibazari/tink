@@ -103,14 +103,13 @@ if you have an active userAccessToken you can pass the token in the ```userToken
  const userCode = await TinkObject.UserCode(externalUserId);
       await TinkUserObject.UserAccessToken(userCode);
       const list_transactions = await TinkUserObject.Transactions({
-          isBooked: true,
-          userToken: req.body.userToken,
+          isBooked: true
         });
 
 // With a userAccessToken
 const list_transactions = await TinkUserObject.Transactions({
           isBooked: true,
-          userToken: userToken,
+          userToken: req.body.userToken
         });
 ```
 
